@@ -1,8 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const { getSpells, addSpell } = require("../controllers/spellController");
+const spellController = require("../controllers/spellController");
 
-router.get("/", getSpells);
-router.post("/", addSpell);
+// Existing routes
+router.get("/", spellController.getSpells);
+router.post("/", spellController.addSpell);
+
+// PUT route
+router.put("/:id", spellController.updateSpell);
+
+// DELETE route
+router.delete("/:id", spellController.deleteSpell);
 
 module.exports = router;

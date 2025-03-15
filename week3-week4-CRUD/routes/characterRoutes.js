@@ -1,8 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const { getCharacters, addCharacter } = require("../controllers/characterController");
+const characterController = require("../controllers/characterController");
 
-router.get("/", getCharacters);
-router.post("/", addCharacter);
+// Base routes
+router.get("/", characterController.getCharacters);
+router.post("/", characterController.addCharacter);
+
+// PUT route
+router.put("/:id", characterController.updateCharacter);
+
+// DELETE route
+router.delete("/:id", characterController.deleteCharacter);
 
 module.exports = router;
