@@ -4,16 +4,31 @@ const doc = {
   info: {
     title: "Contacts API",
     description: "API for managing contacts",
+    version: "1.0.0"
   },
-  host: "cse341-6wo0.onrender.com", // Render URL
-  schemes: ["https"], // Use HTTPS
+  host: "cse341-6wo0.onrender.com", // Your deployed host
+  basePath: "/",
+  schemes: ["https"], // Ensure HTTPS for deployment
   definitions: {
     Contact: {
-      firstName: "Example",
-      lastName: "User",
-      email: "example.user@example.com",
-      favoriteColor: "Blue",
-      birthday: "1990-01-01"
+      type: "object",
+      properties: {
+        firstName: { type: "string", example: "John" },
+        lastName: { type: "string", example: "Doe" },
+        email: { type: "string", example: "johndoe@example.com" },
+        favoriteColor: { type: "string", example: "Blue" },
+        birthday: { type: "string", example: "1990-01-01" }
+      }
+    },
+    UpdateContact: {
+      type: "object",
+      properties: {
+        firstName: { type: "string", example: "Updated First Name" },
+        lastName: { type: "string", example: "Updated Last Name" },
+        email: { type: "string", example: "updated.email@example.com" },
+        favoriteColor: { type: "string", example: "Green" },
+        birthday: { type: "string", example: "1995-05-05" }
+      }
     }
   },
   paths: {
@@ -22,10 +37,12 @@ const doc = {
         tags: ["Contacts"],
         summary: "Create a new contact",
         consumes: ["application/json"],
+        produces: ["application/json"],
         parameters: [
           {
             in: "body",
-            name: "body",
+            name: "contact",
+            description: "Contact object that needs to be added",
             required: true,
             schema: {
               $ref: "#/definitions/Contact"
@@ -50,6 +67,7 @@ const doc = {
         tags: ["Contacts"],
         summary: "Update an existing contact",
         consumes: ["application/json"],
+        produces: ["application/json"],
         parameters: [
           {
             name: "id",
@@ -60,10 +78,11 @@ const doc = {
           },
           {
             in: "body",
-            name: "body",
+            name: "contact",
+            description: "Updated contact object",
             required: true,
             schema: {
-              $ref: "#/definitions/Contact"
+              $ref: "#/definitions/UpdateContact"
             }
           }
         ],

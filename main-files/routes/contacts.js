@@ -38,7 +38,14 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const contactsCollection = await connectToDatabase();
-        const newContact = req.body;
+        
+        const newContact = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            favoriteColor: req.body.favoriteColor,
+            birthday: req.body.birthday
+        };
 
         const result = await contactsCollection.insertOne(newContact);
         res.status(201).json({ message: 'Contact added', id: result.insertedId });
@@ -47,12 +54,31 @@ router.post('/', async (req, res) => {
         res.status(500).json({ message: 'Error adding contact' });
     }
 });
+// router.post('/', async (req, res) => {
+//     try {
+//         const contactsCollection = await connectToDatabase();
+//         const newContact = req.body;
+
+//         const result = await contactsCollection.insertOne(newContact);
+//         res.status(201).json({ message: 'Contact added', id: result.insertedId });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Error adding contact' });
+//     }
+// });
+
 
 // PUT (Update) a contact by ID
 router.put('/:id', async (req, res) => {
     try {
         const contactsCollection = await connectToDatabase();
-        const updatedContact = req.body;
+        const updatedContact = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            favoriteColor: req.body.favoriteColor,
+            birthday: req.body.birthday
+        };
 
         const result = await contactsCollection.updateOne(
             { _id: new ObjectId(req.params.id) },
@@ -69,6 +95,26 @@ router.put('/:id', async (req, res) => {
         res.status(500).json({ message: 'Error updating contact' });
     }
 });
+// router.put('/:id', async (req, res) => {
+//     try {
+//         const contactsCollection = await connectToDatabase();
+//         const updatedContact = req.body;
+
+//         const result = await contactsCollection.updateOne(
+//             { _id: new ObjectId(req.params.id) },
+//             { $set: updatedContact }
+//         );
+
+//         if (result.matchedCount === 0) {
+//             return res.status(404).json({ message: 'Contact not found' });
+//         }
+
+//         res.json({ message: 'Contact updated' });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Error updating contact' });
+//     }
+// });
 
 // DELETE a contact by ID
 router.delete('/:id', async (req, res) => {

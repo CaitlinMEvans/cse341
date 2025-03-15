@@ -8,7 +8,7 @@ async function connectToDatabase() {
     try {
         await client.connect();
         console.log('Connected to MongoDB');
-        return client.db('contactsDB').collection('contacts'); // Ensure your database and collection name are correct
+        return client.db('contactsDB').collection('contacts');
     } catch (error) {
         console.error('MongoDB connection error:', error);
         throw error;
