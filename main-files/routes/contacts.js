@@ -1,6 +1,6 @@
 const express = require('express');
 const { ObjectId } = require('mongodb');
-const router = express.Router();
+const router = express.Router(); 
 
 // Import MongoDB connection function
 const connectToDatabase = require('../db.js'); 
