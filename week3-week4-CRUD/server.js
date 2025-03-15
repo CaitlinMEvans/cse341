@@ -16,10 +16,13 @@ app.use("/api/spells", spellRoutes);
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.log("❌ MongoDB Connection Error:", err));
+    .then(() => console.log("✅ MongoDB Connected"))
+    .catch(err => console.log("❌ MongoDB Connection Error:", err));
 
 
-  const PORT = process.env.PORT || 8080;
-  app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-  
+    const PORT = process.env.PORT || 8080;
+    const swaggerUi = require("swagger-ui-express");
+    const swaggerDocument = require("./swagger.json");
+
+    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
