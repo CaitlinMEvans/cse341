@@ -35,13 +35,58 @@
                 "name": {
                   "example": "any"
                 },
+                "alternate_names": {
+                  "example": "any"
+                },
+                "species": {
+                  "example": "any"
+                },
+                "gender": {
+                  "example": "any"
+                },
                 "house": {
                   "example": "any"
                 },
-                "wand": {
+                "dateOfBirth": {
+                  "example": "any"
+                },
+                "yearOfBirth": {
+                  "example": "any"
+                },
+                "wizard": {
+                  "example": "any"
+                },
+                "ancestry": {
+                  "example": "any"
+                },
+                "eyeColour": {
+                  "example": "any"
+                },
+                "hairColour": {
                   "example": "any"
                 },
                 "patronus": {
+                  "example": "any"
+                },
+                "hogwartsStudent": {
+                  "example": "any"
+                },
+                "hogwartsStaff": {
+                  "example": "any"
+                },
+                "actor": {
+                  "example": "any"
+                },
+                "alternate_actors": {
+                  "example": "any"
+                },
+                "alive": {
+                  "example": "any"
+                },
+                "image": {
+                  "example": "any"
+                },
+                "wand": {
                   "example": "any"
                 }
               }
@@ -99,13 +144,58 @@
                 "name": {
                   "example": "any"
                 },
+                "alternate_names": {
+                  "example": "any"
+                },
+                "species": {
+                  "example": "any"
+                },
+                "gender": {
+                  "example": "any"
+                },
                 "house": {
                   "example": "any"
                 },
-                "wand": {
+                "dateOfBirth": {
+                  "example": "any"
+                },
+                "yearOfBirth": {
+                  "example": "any"
+                },
+                "wizard": {
+                  "example": "any"
+                },
+                "ancestry": {
+                  "example": "any"
+                },
+                "eyeColour": {
+                  "example": "any"
+                },
+                "hairColour": {
                   "example": "any"
                 },
                 "patronus": {
+                  "example": "any"
+                },
+                "hogwartsStudent": {
+                  "example": "any"
+                },
+                "hogwartsStaff": {
+                  "example": "any"
+                },
+                "actor": {
+                  "example": "any"
+                },
+                "alternate_actors": {
+                  "example": "any"
+                },
+                "alive": {
+                  "example": "any"
+                },
+                "image": {
+                  "example": "any"
+                },
+                "wand": {
                   "example": "any"
                 }
               }
