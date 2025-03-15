@@ -10,21 +10,46 @@ dotenv.config();
 
 mongoose
   .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.log("❌ MongoDB Connection Error:", err));
+  .then(() => console.log(" MongoDB Connected"))
+  .catch(err => {
+    console.error(" MongoDB Connection Error:", err);
+    process.exit(1);
+  });
 
 const importData = async () => {
   try {
-    const characters = JSON.parse(fs.readFileSync("hp-characters.json", "utf-8"));
-    const spells = JSON.parse(fs.readFileSync("hp-spells.json", "utf-8"));
+    console.log(" Importing Data...");
 
+    // Load JSON files
+    const charactersRaw = fs.readFileSync("hp-characters.json", "utf-8");
+    const spellsRaw = fs.readFileSync("hp-spells.json", "utf-8");
+
+    let characters = JSON.parse(charactersRaw);
+    let spells = JSON.parse(spellsRaw);
+
+    // Clear existing data
+    await Character.deleteMany();
+    await Spell.deleteMany();
+    console.log("  Existing collections cleared.");
+
+    // Ensure all spell fields are present
+    spells = spells.map(spell => ({
+      name: spell.name || "Unknown",
+      effect: spell.effect || "Unknown effect",
+      type: spell.type || "Unknown type",
+      incantation: spell.incantation || "Unknown incantation"
+    }));
+
+    // Insert data
     await Character.insertMany(characters);
     await Spell.insertMany(spells);
 
-    console.log("✅ Data Imported Successfully!");
+    console.log(` Successfully Imported ${characters.length} Characters`);
+    console.log(` Successfully Imported ${spells.length} Spells`);
+    
     process.exit();
   } catch (error) {
-    console.error("❌ Error importing data:", error);
+    console.error(" Error importing data:", error);
     process.exit(1);
   }
 };
