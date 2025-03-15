@@ -4,6 +4,7 @@ const swaggerDocument = require("./swagger.json");
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+app.use(cors({ origin: "*" })); // Allows all origins
 const contactsRoutes = require('./routes/contacts');
 
 const app = express();

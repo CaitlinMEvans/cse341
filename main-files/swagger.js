@@ -2,14 +2,14 @@ const swaggerAutogen = require("swagger-autogen")();
 
 const host = process.env.NODE_ENV === "production"
   ? "cse341-6wo0.onrender.com"
-  : "localhost:8080"; // Uses localhost in development
+  : "localhost:8080"; // Match local server
 
 const doc = {
   info: {
     title: "Contacts API",
     description: "API for managing contacts",
   },
-  host: host, // Dynamically set based on environment
+  host: host, // Uses dynamic host
   schemes: process.env.NODE_ENV === "production" ? ["https"] : ["http"],
 };
 
