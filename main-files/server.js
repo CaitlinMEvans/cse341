@@ -4,13 +4,12 @@ const swaggerDocument = require("./swagger.json");
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-app.use(cors({ origin: "*" })); // Allows all origins
 const contactsRoutes = require('./routes/contacts');
 
-const app = express();
+const app = express();  // ✅ Define app first
 const port = 8080;
 
-app.use(cors());
+app.use(cors({ origin: "*" })); // ✅ Now it's safe to use app.use()
 app.use(express.json()); // Middleware to parse JSON
 app.use('/contacts', contactsRoutes); // Use the contacts routes
 
