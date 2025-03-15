@@ -35,9 +35,9 @@ const importData = async () => {
     // Ensure all spell fields are present
     spells = spells.map(spell => ({
       name: spell.name || "Unknown",
-      effect: spell.effect || "Unknown effect",
+      effect: spell.description || "Unknown effect",
       type: spell.type || "Unknown type",
-      incantation: spell.incantation || "Unknown incantation"
+      incantation: spell.name || "Unknown incantation"
     }));
 
     // Insert data
