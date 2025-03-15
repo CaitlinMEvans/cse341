@@ -6,10 +6,10 @@ const express = require('express');
 const cors = require('cors');
 const contactsRoutes = require('./routes/contacts');
 
-const app = express();  // ✅ Define app first
+const app = express();  // Define app first
 const port = 8080;
 
-app.use(cors({ origin: "*" })); // ✅ Now it's safe to use app.use()
+app.use(cors({ origin: "*" })); // Now it's safe to use app.use()
 app.use(express.json()); // Middleware to parse JSON
 app.use('/contacts', contactsRoutes); // Use the contacts routes
 
