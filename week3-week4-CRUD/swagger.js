@@ -2,8 +2,8 @@ const swaggerAutogen = require("swagger-autogen")();
 
 const doc = {
   info: {
-    title: "Harry Potter API",
-    description: "API for managing Harry Potter characters and spells",
+    title: "Harry Potter Characters and Spells",
+    description: "This DB / API is for managing Harry Potter characters and spells",
     version: "1.0.0"
   },
   host: "cse341-6wo0.onrender.com", // Update with your Render URL
@@ -43,15 +43,20 @@ const doc = {
         tags: ["Characters"],
         summary: "Add a new character",
         consumes: ["application/json"],
+        produces: ["application/json"],
         parameters: [
           {
             in: "body",
-            name: "body",
-            description: "Character data to be added",
+            name: "character",
+            description: "Character object to be added",
             required: true,
             schema: { $ref: "#/definitions/Character" }
           }
-        ]
+        ],
+        responses: {
+          201: { description: "Character added successfully" },
+          400: { description: "Invalid request" }
+        }
       }
     },
     "/api/characters/{id}": {
@@ -59,21 +64,31 @@ const doc = {
         tags: ["Characters"],
         summary: "Update a character",
         consumes: ["application/json"],
+        produces: ["application/json"],
         parameters: [
           { name: "id", in: "path", required: true, type: "string" },
           {
             in: "body",
-            name: "body",
-            description: "Updated character data",
+            name: "character",
+            description: "Updated character object",
             required: true,
             schema: { $ref: "#/definitions/Character" }
           }
-        ]
+        ],
+        responses: {
+          200: { description: "Character updated successfully" },
+          400: { description: "Invalid request" },
+          404: { description: "Character not found" }
+        }
       },
       delete: {
         tags: ["Characters"],
         summary: "Delete a character",
-        parameters: [{ name: "id", in: "path", required: true, type: "string" }]
+        parameters: [{ name: "id", in: "path", required: true, type: "string" }],
+        responses: {
+          200: { description: "Character deleted successfully" },
+          404: { description: "Character not found" }
+        }
       }
     },
     "/api/spells": {
@@ -82,15 +97,20 @@ const doc = {
         tags: ["Spells"],
         summary: "Add a new spell",
         consumes: ["application/json"],
+        produces: ["application/json"],
         parameters: [
           {
             in: "body",
-            name: "body",
-            description: "Spell data to be added",
+            name: "spell",
+            description: "Spell object to be added",
             required: true,
             schema: { $ref: "#/definitions/Spell" }
           }
-        ]
+        ],
+        responses: {
+          201: { description: "Spell added successfully" },
+          400: { description: "Invalid request" }
+        }
       }
     },
     "/api/spells/{id}": {
@@ -98,21 +118,31 @@ const doc = {
         tags: ["Spells"],
         summary: "Update a spell",
         consumes: ["application/json"],
+        produces: ["application/json"],
         parameters: [
           { name: "id", in: "path", required: true, type: "string" },
           {
             in: "body",
-            name: "body",
-            description: "Updated spell data",
+            name: "spell",
+            description: "Updated spell object",
             required: true,
             schema: { $ref: "#/definitions/Spell" }
           }
-        ]
+        ],
+        responses: {
+          200: { description: "Spell updated successfully" },
+          400: { description: "Invalid request" },
+          404: { description: "Spell not found" }
+        }
       },
       delete: {
         tags: ["Spells"],
         summary: "Delete a spell",
-        parameters: [{ name: "id", in: "path", required: true, type: "string" }]
+        parameters: [{ name: "id", in: "path", required: true, type: "string" }],
+        responses: {
+          200: { description: "Spell deleted successfully" },
+          404: { description: "Spell not found" }
+        }
       }
     }
   }
