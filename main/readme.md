@@ -1,7 +1,7 @@
 # Week 1 API - Contacts
 ## 📂 Project Structure
 ```
-week1-api/
+main/
 │── routes/
 │   ├── contacts.js  # Routes for handling contacts API
 │── db.js            # Database connection setup
