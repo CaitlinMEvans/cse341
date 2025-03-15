@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Harry Potter Characters and Spells",
-    "description": "This DB / API is for managing Harry Potter characters and spells",
+    "title": "Harry Potter API",
+    "description": "API for managing Harry Potter characters and spells",
     "version": "1.0.0"
   },
   "host": "cse341-6wo0.onrender.com",
@@ -308,6 +308,60 @@
                 }
               }
             },
+            "alternate_names": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "type": "array",
+                  "example": [
+                    "The Boy Who Lived",
+                    "The Chosen One"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "species": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "human"
+                }
+              }
+            },
+            "gender": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "male"
+                }
+              }
+            },
             "house": {
               "type": "object",
               "properties": {
@@ -318,6 +372,185 @@
                 "example": {
                   "type": "string",
                   "example": "Gryffindor"
+                }
+              }
+            },
+            "dateOfBirth": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "31-07-1980"
+                }
+              }
+            },
+            "yearOfBirth": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "number"
+                },
+                "example": {
+                  "type": "number",
+                  "example": 1980
+                }
+              }
+            },
+            "wizard": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "example": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            },
+            "ancestry": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "half-blood"
+                }
+              }
+            },
+            "eyeColour": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "green"
+                }
+              }
+            },
+            "hairColour": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "black"
+                }
+              }
+            },
+            "patronus": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "stag"
+                }
+              }
+            },
+            "hogwartsStudent": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "example": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            },
+            "hogwartsStaff": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "example": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            },
+            "actor": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "Daniel Radcliffe"
+                }
+              }
+            },
+            "alternate_actors": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "type": "array",
+                  "example": [],
+                  "items": {}
+                }
+              }
+            },
+            "alive": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "example": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            },
+            "image": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "https://ik.imagekit.io/hpapi/harry.jpg"
                 }
               }
             },
@@ -340,7 +573,7 @@
                         },
                         "example": {
                           "type": "string",
-                          "example": "Holly"
+                          "example": "holly"
                         }
                       }
                     },
@@ -353,7 +586,7 @@
                         },
                         "example": {
                           "type": "string",
-                          "example": "Phoenix feather"
+                          "example": "phoenix tail feather"
                         }
                       }
                     },
@@ -371,19 +604,6 @@
                       }
                     }
                   }
-                }
-              }
-            },
-            "patronus": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "Stag"
                 }
               }
             }

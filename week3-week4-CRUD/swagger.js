@@ -2,28 +2,43 @@ const swaggerAutogen = require("swagger-autogen")();
 
 const doc = {
   info: {
-    title: "Harry Potter Characters and Spells",
-    description: "This DB / API is for managing Harry Potter characters and spells",
+    title: "Harry Potter API",
+    description: "API for managing Harry Potter characters and spells",
     version: "1.0.0"
   },
-  host: "cse341-6wo0.onrender.com", // Update with your Render URL
+  host: "cse341-6wo0.onrender.com",
   basePath: "/",
-  schemes: ["https"], // Use HTTPS when deployed
+  schemes: ["https"],
   definitions: {
     Character: {
       type: "object",
       properties: {
         name: { type: "string", example: "Harry Potter" },
+        alternate_names: { type: "array", items: { type: "string" }, example: ["The Boy Who Lived", "The Chosen One"] },
+        species: { type: "string", example: "human" },
+        gender: { type: "string", example: "male" },
         house: { type: "string", example: "Gryffindor" },
+        dateOfBirth: { type: "string", example: "31-07-1980" },
+        yearOfBirth: { type: "number", example: 1980 },
+        wizard: { type: "boolean", example: true },
+        ancestry: { type: "string", example: "half-blood" },
+        eyeColour: { type: "string", example: "green" },
+        hairColour: { type: "string", example: "black" },
+        patronus: { type: "string", example: "stag" },
+        hogwartsStudent: { type: "boolean", example: true },
+        hogwartsStaff: { type: "boolean", example: false },
+        actor: { type: "string", example: "Daniel Radcliffe" },
+        alternate_actors: { type: "array", items: { type: "string" }, example: [] },
+        alive: { type: "boolean", example: true },
+        image: { type: "string", example: "https://ik.imagekit.io/hpapi/harry.jpg" },
         wand: {
           type: "object",
           properties: {
-            wood: { type: "string", example: "Holly" },
-            core: { type: "string", example: "Phoenix feather" },
+            wood: { type: "string", example: "holly" },
+            core: { type: "string", example: "phoenix tail feather" },
             length: { type: "number", example: 11 }
           }
-        },
-        patronus: { type: "string", example: "Stag" }
+        }
       }
     },
     Spell: {
@@ -60,6 +75,15 @@ const doc = {
       }
     },
     "/api/characters/{id}": {
+      get: {
+        tags: ["Characters"],
+        summary: "Get a single character by ID",
+        parameters: [{ name: "id", in: "path", required: true, type: "string" }],
+        responses: {
+          200: { description: "Character found" },
+          404: { description: "Character not found" }
+        }
+      },
       put: {
         tags: ["Characters"],
         summary: "Update a character",
@@ -114,6 +138,15 @@ const doc = {
       }
     },
     "/api/spells/{id}": {
+      get: {
+        tags: ["Spells"],
+        summary: "Get a single spell by ID",
+        parameters: [{ name: "id", in: "path", required: true, type: "string" }],
+        responses: {
+          200: { description: "Spell found" },
+          404: { description: "Spell not found" }
+        }
+      },
       put: {
         tags: ["Spells"],
         summary: "Update a spell",
