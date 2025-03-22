@@ -29,7 +29,7 @@ router.get("/logout", (req, res) => {
       return next(err);
     }
     req.session.destroy(() => {
-      res.redirect("/"); // Redirect to homepage after logout
+      res.redirect("/auth/google"); // redirects to login page after logout
     });
   });
 });
