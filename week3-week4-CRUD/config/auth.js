@@ -5,9 +5,9 @@ const User = require("../models/userModels");
 // Dynamically choose callback URL based on environment
 const isProduction = process.env.NODE_ENV === "production";
 const callbackURL = isProduction
-  ? "https://cse341-6wo0.onrender.com/auth/google/callback"
+  ? process.env.GOOGLE_CALLBACK_URL
   : "http://localhost:8080/auth/google/callback";
-
+  
 passport.use(
   new GoogleStrategy(
     {
