@@ -9,6 +9,19 @@ const doc = {
   host: "cse341-6wo0.onrender.com",
   basePath: "/",
   schemes: ["https"],
+  securityDefinitions: {
+    OAuth2: {
+      type: "oauth2",
+      flow: "authorizationCode",
+      authorizationUrl: "https://accounts.google.com/o/oauth2/auth",
+      tokenUrl: "https://oauth2.googleapis.com/token",
+      scopes: {
+        "read:students": "Access student list",
+        "read:professors": "Access professor list"
+      }
+    }
+  },
+  security: [{ OAuth2: ["read:students", "read:professors"] }],
   definitions: {
     Character: {
       type: "object",
@@ -175,6 +188,28 @@ const doc = {
         responses: {
           200: { description: "Spell deleted successfully" },
           404: { description: "Spell not found" }
+        }
+      }
+    },
+    "/api/students": {
+      get: {
+        tags: ["Protected"],
+        summary: "Get list of students (Professors only)",
+        security: [{ OAuth2: ["read:students"] }],
+        responses: {
+          200: { description: "List of students returned successfully" },
+          403: { description: "Forbidden: Professors only" }
+        }
+      }
+    },
+    "/api/professors": {
+      get: {
+        tags: ["Protected"],
+        summary: "Get list of professors (Authenticated users only)",
+        security: [{ OAuth2: ["read:professors"] }],
+        responses: {
+          200: { description: "List of professors returned successfully" },
+          401: { description: "Unauthorized: Login required" }
         }
       }
     }
