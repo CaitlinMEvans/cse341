@@ -22,12 +22,49 @@ const doc = {
     }
   },
   security: [{ OAuth2: ["read:students", "read:professors"] }],
+  // definitions: {
+  //   Character: {
+  //     name: "Harry Potter",
+  //     alternate_names: ["The Boy Who Lived", "The Chosen One"],
+  //     species: "human",
+  //     gender: "male",
+  //     house: "Gryffindor",
+  //     dateOfBirth: "31-07-1980",
+  //     yearOfBirth: 1980,
+  //     wizard: true,
+  //     ancestry: "half-blood",
+  //     eyeColour: "green",
+  //     hairColour: "black",
+  //     patronus: "stag",
+  //     hogwartsStudent: true,
+  //     hogwartsStaff: false,
+  //     actor: "Daniel Radcliffe",
+  //     alternate_actors: [],
+  //     alive: true,
+  //     image: "https://ik.imagekit.io/hpapi/harry.jpg",
+  //     wand: {
+  //       wood: "holly",
+  //       core: "phoenix tail feather",
+  //       length: 11
+  //     }
+  //   },
+  //   Spell: {
+  //     name: "Expelliarmus",
+  //     effect: "Disarms opponent",
+  //     type: "Charm",
+  //     incantation: "Expelliarmus"
+  //   }
+  // },
   definitions: {
     Character: {
       type: "object",
       properties: {
         name: { type: "string", example: "Harry Potter" },
-        alternate_names: { type: "array", items: { type: "string" }, example: ["The Boy Who Lived", "The Chosen One"] },
+        alternate_names: {
+          type: "array",
+          items: { type: "string" },
+          example: ["The Boy Who Lived", "The Chosen One"]
+        },
         species: { type: "string", example: "human" },
         gender: { type: "string", example: "male" },
         house: { type: "string", example: "Gryffindor" },
@@ -41,7 +78,11 @@ const doc = {
         hogwartsStudent: { type: "boolean", example: true },
         hogwartsStaff: { type: "boolean", example: false },
         actor: { type: "string", example: "Daniel Radcliffe" },
-        alternate_actors: { type: "array", items: { type: "string" }, example: [] },
+        alternate_actors: {
+          type: "array",
+          items: { type: "string" },
+          example: []
+        },
         alive: { type: "boolean", example: true },
         image: { type: "string", example: "https://ik.imagekit.io/hpapi/harry.jpg" },
         wand: {
@@ -63,7 +104,7 @@ const doc = {
         incantation: { type: "string", example: "Expelliarmus" }
       }
     }
-  },
+  },  
   paths: {
     "/api/characters": {
       get: { tags: ["Characters"], summary: "Get all characters" },
@@ -71,26 +112,24 @@ const doc = {
         tags: ["Characters"],
         summary: "Add a new character",
         consumes: ["application/json"],
-        produces: ["application/json"],
         parameters: [
           {
             in: "body",
             name: "character",
-            description: "Character object to be added",
             required: true,
             schema: { $ref: "#/definitions/Character" }
           }
         ],
         responses: {
-          201: { description: "Character added successfully" },
-          400: { description: "Invalid request" }
+          201: { description: "Character created" },
+          400: { description: "Invalid character data" }
         }
       }
     },
     "/api/characters/{id}": {
       get: {
         tags: ["Characters"],
-        summary: "Get a single character by ID",
+        summary: "Get a character by ID",
         parameters: [{ name: "id", in: "path", required: true, type: "string" }],
         responses: {
           200: { description: "Character found" },
@@ -101,20 +140,18 @@ const doc = {
         tags: ["Characters"],
         summary: "Update a character",
         consumes: ["application/json"],
-        produces: ["application/json"],
         parameters: [
           { name: "id", in: "path", required: true, type: "string" },
           {
             in: "body",
             name: "character",
-            description: "Updated character object",
             required: true,
             schema: { $ref: "#/definitions/Character" }
           }
         ],
         responses: {
-          200: { description: "Character updated successfully" },
-          400: { description: "Invalid request" },
+          200: { description: "Character updated" },
+          400: { description: "Invalid data" },
           404: { description: "Character not found" }
         }
       },
@@ -123,7 +160,7 @@ const doc = {
         summary: "Delete a character",
         parameters: [{ name: "id", in: "path", required: true, type: "string" }],
         responses: {
-          200: { description: "Character deleted successfully" },
+          200: { description: "Character deleted" },
           404: { description: "Character not found" }
         }
       }
@@ -134,26 +171,24 @@ const doc = {
         tags: ["Spells"],
         summary: "Add a new spell",
         consumes: ["application/json"],
-        produces: ["application/json"],
         parameters: [
           {
             in: "body",
             name: "spell",
-            description: "Spell object to be added",
             required: true,
             schema: { $ref: "#/definitions/Spell" }
           }
         ],
         responses: {
-          201: { description: "Spell added successfully" },
-          400: { description: "Invalid request" }
+          201: { description: "Spell added" },
+          400: { description: "Invalid spell data" }
         }
       }
     },
     "/api/spells/{id}": {
       get: {
         tags: ["Spells"],
-        summary: "Get a single spell by ID",
+        summary: "Get a spell by ID",
         parameters: [{ name: "id", in: "path", required: true, type: "string" }],
         responses: {
           200: { description: "Spell found" },
@@ -164,20 +199,18 @@ const doc = {
         tags: ["Spells"],
         summary: "Update a spell",
         consumes: ["application/json"],
-        produces: ["application/json"],
         parameters: [
           { name: "id", in: "path", required: true, type: "string" },
           {
             in: "body",
             name: "spell",
-            description: "Updated spell object",
             required: true,
             schema: { $ref: "#/definitions/Spell" }
           }
         ],
         responses: {
-          200: { description: "Spell updated successfully" },
-          400: { description: "Invalid request" },
+          200: { description: "Spell updated" },
+          400: { description: "Invalid data" },
           404: { description: "Spell not found" }
         }
       },
@@ -186,30 +219,8 @@ const doc = {
         summary: "Delete a spell",
         parameters: [{ name: "id", in: "path", required: true, type: "string" }],
         responses: {
-          200: { description: "Spell deleted successfully" },
+          200: { description: "Spell deleted" },
           404: { description: "Spell not found" }
-        }
-      }
-    },
-    "/api/students": {
-      get: {
-        tags: ["Protected"],
-        summary: "Get list of students (Professors only)",
-        security: [{ OAuth2: ["read:students"] }],
-        responses: {
-          200: { description: "List of students returned successfully" },
-          403: { description: "Forbidden: Professors only" }
-        }
-      }
-    },
-    "/api/professors": {
-      get: {
-        tags: ["Protected"],
-        summary: "Get list of professors (Authenticated users only)",
-        security: [{ OAuth2: ["read:professors"] }],
-        responses: {
-          200: { description: "List of professors returned successfully" },
-          401: { description: "Unauthorized: Login required" }
         }
       }
     }
