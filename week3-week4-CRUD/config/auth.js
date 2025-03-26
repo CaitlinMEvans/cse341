@@ -2,18 +2,20 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("../models/userModels");
 
-// Dynamically choose callback URL based on environment
-const isProduction = process.env.NODE_ENV === "production";
-const callbackURL = isProduction
-  ? process.env.GOOGLE_CALLBACK_URL
-  : "http://localhost:8080/auth/google/callback";
-  
+// // Dynamically choose callback URL based on environment
+// const isProduction = process.env.NODE_ENV === "production";
+// const callbackURL = isProduction
+//   ? process.env.GOOGLE_CALLBACK_URL
+//   : "http://localhost:8080/auth/google/callback";
+
+const callbackURL = "https://cse341-6wo0.onrender.com/auth/google/callback";
+
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL, // dynamically assigned
+      callbackURL,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {

@@ -12,24 +12,22 @@ const authRoutes = require("./routes/authRoutes");
 const protectedRoutes = require("./routes/protectedRoutes");
 
 const app = express();
-const PORT = process.env.PORT;
-// || 8080;
+const PORT = process.env.PORT; 
 
-// // CORS Configuration
-// const corsOptions = {
-//     origin: [
-//       "https://cse341-6wo0.onrender.com", // Swagger on Render
-//       "http://localhost:8080"             // Local testing
-//     ],
-//     credentials: true
-//   };
+const corsOptions = {
+  origin: "https://cse341-6wo0.onrender.com",
+  credentials: true
+};
 
-// Middleware
-app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 // MongoDB
 mongoose.connect(process.env.MONGO_URI)
@@ -42,12 +40,13 @@ app.use("/api/spells", spellRoutes);
 app.use("/auth", authRoutes);
 app.use("/api", protectedRoutes);
 
-// Swagger
+// Swagger Docs
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 const { isProfessor } = require("./middleware/authMiddleware");
 
 app.use("/api-docs", isProfessor, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-app.listen(PORT, '0.0.0.0', () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});

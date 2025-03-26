@@ -7,7 +7,7 @@
   },
   "host": "cse341-6wo0.onrender.com",
   "basePath": "/",
-  "schemes": [ "http", "https" ],
+  "schemes": [ "https" ],
   "securityDefinitions": {
     "OAuth2": {
       "type": "oauth2",
