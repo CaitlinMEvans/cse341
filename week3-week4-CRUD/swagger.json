@@ -7,7 +7,9 @@
   },
   "host": "cse341-6wo0.onrender.com",
   "basePath": "/",
-  "schemes": ["http", "https"],
+  "schemes": [
+    "https"
+  ],
   "securityDefinitions": {
     "OAuth2": {
       "type": "oauth2",
@@ -20,11 +22,6 @@
       }
     }
   },
-  "security": [
-    {
-      "OAuth2": ["read:students", "read:professors"]
-    }
-  ],
   "paths": {
     "/api/characters": {
       "get": {
