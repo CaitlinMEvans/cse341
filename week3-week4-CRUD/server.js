@@ -14,12 +14,21 @@ const protectedRoutes = require("./routes/protectedRoutes");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+// CORS Configuration
+const corsOptions = {
+    origin: [
+      "https://cse341-6wo0.onrender.com", // Swagger on Render
+      "http://localhost:8080"             // Local testing
+    ],
+    credentials: true
+  };
+
 // Middleware
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 // MongoDB
 mongoose.connect(process.env.MONGO_URI)
