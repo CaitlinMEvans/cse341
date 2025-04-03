@@ -1,0 +1,176 @@
+/* Custom styles for Pet Tracker API */
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  main {
+    flex: 1;
+    padding: 2rem 0;
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .navbar-brand .paw-icon {
+    margin-right: 0.5rem;
+  }
+  
+  .card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 1.5rem;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-title {
+    font-weight: 600;
+    color: #4e73df;
+  }
+  
+  .btn-primary {
+    background-color: #4e73df;
+    border-color: #4e73df;
+  }
+  
+  .btn-primary:hover {
+    background-color: #2e59d9;
+    border-color: #2e59d9;
+  }
+  
+  .btn-outline-primary {
+    color: #4e73df;
+    border-color: #4e73df;
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: #4e73df;
+    color: white;
+  }
+  
+  .bg-primary {
+    background-color: #4e73df !important;
+  }
+  
+  /* Dashboard styles */
+  .dashboard-stats .card {
+    border-left: 4px solid;
+  }
+  
+  .stats-pets {
+    border-left-color: #4e73df !important;
+  }
+  
+  .stats-medical {
+    border-left-color: #1cc88a !important;
+  }
+  
+  .stats-appointments {
+    border-left-color: #36b9cc !important;
+  }
+  
+  /* Card icons */
+  .feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #4e73df;
+  }
+  
+  /* Home page hero section */
+  .hero-section {
+    background-color: #4e73df;
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+  }
+  
+  .hero-section h1 {
+    font-weight: 700;
+  }
+  
+  .hero-section .lead {
+    font-size: 1.25rem;
+  }
+  
+  /* Login page */
+  .login-card {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .login-card .card-header {
+    background-color: #4e73df;
+    color: white;
+    font-weight: 600;
+    padding: 1rem;
+  }
+  
+  .google-btn {
+    background-color: #fff;
+    color: #666;
+    border: 1px solid #ddd;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.2s ease;
+  }
+  
+  .google-btn:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .google-btn .google-icon {
+    margin-right: 0.75rem;
+    font-size: 1.25rem;
+  }
+  
+  /* Dashboard page */
+  .user-welcome {
+    background-color: #4e73df;
+    color: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .user-welcome h4 {
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+  
+  .dashboard-card-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #4e73df;
+  }
+  
+  /* Footer */
+  footer {
+    padding: 1.5rem 0;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    margin-top: auto;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 2rem 0;
+    }
+    
+    .card-deck {
+      flex-direction: column;
+    }
+  }
