@@ -1,0 +1,342 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Pet Tracker API",
+      "description": "API for tracking pet information, medical records, and appointments",
+      "version": "1.0.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "schemes": ["http", "https"],
+    "securityDefinitions": {
+      "OAuth2": {
+        "type": "oauth2",
+        "flow": "implicit",
+        "authorizationUrl": "/auth/google",
+        "scopes": {
+          "read:pets": "Read pet information",
+          "write:pets": "Modify pet information"
+        }
+      }
+    },
+    "paths": {
+      "/api/pets": {
+        "get": {
+          "tags": ["Pets"],
+          "summary": "Get all pets for the logged in user",
+          "security": [{ "OAuth2": ["read:pets"] }],
+          "responses": {
+            "200": { "description": "List of pets" },
+            "401": { "description": "Not authenticated" },
+            "500": { "description": "Server error" }
+          }
+        },
+        "post": {
+          "tags": ["Pets"],
+          "summary": "Create a new pet",
+          "security": [{ "OAuth2": ["write:pets"] }],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "pet",
+              "description": "Pet object to be added",
+              "required": true,
+              "schema": { "$ref": "#/definitions/PetInput" }
+            }
+          ],
+          "responses": {
+            "201": { "description": "Pet created successfully" },
+            "400": { "description": "Invalid request" },
+            "401": { "description": "Not authenticated" },
+            "500": { "description": "Server error" }
+          }
+        }
+      },
+      "/api/pets/{id}": {
+        "get": {
+          "tags": ["Pets"],
+          "summary": "Get a specific pet",
+          "security": [{ "OAuth2": ["read:pets"] }],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "Pet ID"
+            }
+          ],
+          "responses": {
+            "200": { "description": "Pet details" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized to access this pet" },
+            "404": { "description": "Pet not found" },
+            "500": { "description": "Server error" }
+          }
+        },
+        "put": {
+          "tags": ["Pets"],
+          "summary": "Update a pet",
+          "security": [{ "OAuth2": ["write:pets"] }],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "Pet ID"
+            },
+            {
+              "in": "body",
+              "name": "pet",
+              "description": "Updated pet details",
+              "required": true,
+              "schema": { "$ref": "#/definitions/PetInput" }
+            }
+          ],
+          "responses": {
+            "200": { "description": "Pet updated successfully" },
+            "400": { "description": "Invalid request" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized to update this pet" },
+            "404": { "description": "Pet not found" },
+            "500": { "description": "Server error" }
+          }
+        },
+        "delete": {
+          "tags": ["Pets"],
+          "summary": "Delete a pet",
+          "security": [{ "OAuth2": ["write:pets"] }],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "Pet ID"
+            }
+          ],
+          "responses": {
+            "200": { "description": "Pet deleted successfully" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized to delete this pet" },
+            "404": { "description": "Pet not found" },
+            "500": { "description": "Server error" }
+          }
+        }
+      },
+      "/api/medical/{petId}": {
+        "get": {
+          "tags": ["Medical Records"],
+          "summary": "Get all medical records for a pet",
+          "security": [{ "OAuth2": ["read:pets"] }],
+          "parameters": [
+            {
+              "name": "petId",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "Pet ID"
+            }
+          ],
+          "responses": {
+            "200": { "description": "List of medical records" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized to access this pet's records" },
+            "404": { "description": "Pet not found" },
+            "500": { "description": "Server error" }
+          }
+        },
+        "post": {
+          "tags": ["Medical Records"],
+          "summary": "Create a new medical record",
+          "security": [{ "OAuth2": ["write:pets"] }],
+          "parameters": [
+            {
+              "name": "petId",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "Pet ID"
+            },
+            {
+              "in": "body",
+              "name": "record",
+              "description": "Medical record to be added",
+              "required": true,
+              "schema": { "$ref": "#/definitions/MedicalRecordInput" }
+            }
+          ],
+          "responses": {
+            "201": { "description": "Medical record created successfully" },
+            "400": { "description": "Invalid request" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized to add records for this pet" },
+            "404": { "description": "Pet not found" },
+            "500": { "description": "Server error" }
+          }
+        }
+      },
+      "/api/appointments/{petId}": {
+        "get": {
+          "tags": ["Appointments"],
+          "summary": "Get all appointments for a pet",
+          "security": [{ "OAuth2": ["read:pets"] }],
+          "parameters": [
+            {
+              "name": "petId",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "Pet ID"
+            }
+          ],
+          "responses": {
+            "200": { "description": "List of appointments" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized to access this pet's appointments" },
+            "404": { "description": "Pet not found" },
+            "500": { "description": "Server error" }
+          }
+        },
+        "post": {
+          "tags": ["Appointments"],
+          "summary": "Create a new appointment",
+          "security": [{ "OAuth2": ["write:pets"] }],
+          "parameters": [
+            {
+              "name": "petId",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "Pet ID"
+            },
+            {
+              "in": "body",
+              "name": "appointment",
+              "description": "Appointment to be added",
+              "required": true,
+              "schema": { "$ref": "#/definitions/AppointmentInput" }
+            }
+          ],
+          "responses": {
+            "201": { "description": "Appointment created successfully" },
+            "400": { "description": "Invalid request" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized to add appointments for this pet" },
+            "404": { "description": "Pet not found" },
+            "500": { "description": "Server error" }
+          }
+        }
+      },
+      "/auth/google": {
+        "get": {
+          "tags": ["Authentication"],
+          "summary": "Google OAuth login",
+          "responses": {
+            "302": { "description": "Redirect to Google authentication" }
+          }
+        }
+      },
+      "/auth/google/callback": {
+        "get": {
+          "tags": ["Authentication"],
+          "summary": "Google OAuth callback",
+          "responses": {
+            "302": { "description": "Redirect to dashboard" }
+          }
+        }
+      },
+      "/auth/logout": {
+        "get": {
+          "tags": ["Authentication"],
+          "summary": "Logout",
+          "responses": {
+            "302": { "description": "Redirect to home page" }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "PetInput": {
+        "type": "object",
+        "required": ["name", "species"],
+        "properties": {
+          "name": { "type": "string", "example": "Fluffy" },
+          "species": { "type": "string", "example": "Cat" },
+          "breed": { "type": "string", "example": "Maine Coon" },
+          "birthDate": { "type": "string", "format": "date", "example": "2020-01-15" },
+          "color": { "type": "string", "example": "Brown Tabby" },
+          "weight": {
+            "type": "object",
+            "properties": {
+              "amount": { "type": "number", "example": 12.5 },
+              "unit": { "type": "string", "example": "lb" }
+            }
+          },
+          "microchipNumber": { "type": "string", "example": "985112345678909" },
+          "photoUrl": { "type": "string", "example": "https://example.com/photos/fluffy.jpg" },
+          "notes": { "type": "string", "example": "Fluffy is very shy with strangers." }
+        }
+      },
+      "MedicalRecordInput": {
+        "type": "object",
+        "required": ["date", "recordType", "description"],
+        "properties": {
+          "date": { "type": "string", "format": "date", "example": "2023-01-15" },
+          "recordType": { 
+            "type": "string", 
+            "enum": ["Checkup", "Vaccination", "Illness", "Injury", "Surgery", "Medication", "Dental", "Other"],
+            "example": "Checkup" 
+          },
+          "provider": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string", "example": "Dr. Smith" },
+              "phone": { "type": "string", "example": "555-123-4567" },
+              "email": { "type": "string", "example": "drsmith@example.com" },
+              "address": { "type": "string", "example": "123 Vet St, City, State 12345" }
+            }
+          },
+          "description": { "type": "string", "example": "Annual wellness checkup. All looks good." },
+          "cost": {
+            "type": "object",
+            "properties": {
+              "amount": { "type": "number", "example": 150 },
+              "currency": { "type": "string", "example": "USD" }
+            }
+          },
+          "notes": { "type": "string", "example": "Pet was anxious during exam." }
+        }
+      },
+      "AppointmentInput": {
+        "type": "object",
+        "required": ["date", "appointmentType"],
+        "properties": {
+          "date": { "type": "string", "format": "date", "example": "2023-05-15" },
+          "time": { "type": "string", "example": "14:30" },
+          "appointmentType": { 
+            "type": "string", 
+            "enum": ["Checkup", "Vaccination", "Grooming", "Surgery", "Dental", "Training", "Boarding", "Other"],
+            "example": "Checkup" 
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string", "example": "City Vet Clinic" },
+              "address": { "type": "string", "example": "456 Clinic Ave, City, State 12345" },
+              "phone": { "type": "string", "example": "555-987-6543" },
+              "email": { "type": "string", "example": "appointments@cityvet.com" }
+            }
+          },
+          "description": { "type": "string", "example": "Annual wellness exam and vaccines" },
+          "status": { 
+            "type": "string", 
+            "enum": ["Scheduled", "Confirmed", "Completed", "Cancelled", "Missed"],
+            "example": "Scheduled" 
+          },
+          "notes": { "type": "string", "example": "Bring previous vaccination records." }
+        }
+      }
+    }
+  }
