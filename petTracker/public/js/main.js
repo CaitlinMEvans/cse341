@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pets.forEach(pet => {
       // Format birth date if available
       const birthDate = pet.birthDate ? new Date(pet.birthDate).toLocaleDateString() : 'Unknown';
-      
+      // vvvv TODO: update the view details to go to a new HTML page for displaying the API details that have been added for both Appts and Medical Records
       petsHtml += `
         <div class="col-md-4 mb-3">
           <div class="card h-100">
@@ -137,6 +137,8 @@ document.addEventListener('DOMContentLoaded', function() {
       `;
     });
     
+    //  ^^^ TODO: update the view details to go to a new HTML page for displaying the API details that have been added for both Appts and Medical Records
+
     petsHtml += '</div>';
     petsListContainer.innerHTML = petsHtml;
   }
