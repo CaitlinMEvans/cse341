@@ -1,5 +1,3 @@
-// Main JavaScript for Pet Tracker
-
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize tooltips if Bootstrap is available
     if (typeof bootstrap !== 'undefined') {
@@ -70,7 +68,9 @@ document.addEventListener('DOMContentLoaded', function() {
       userInfoContainer.innerHTML = `
         <h4>Welcome, ${user.name}!</h4>
         <p class="mb-0"><strong>Email:</strong> ${user.email}</p>
+        <p class="mb-0"><strong>User ID:</strong> ${user.id}</p>
         <p class="mb-0"><strong>Account Type:</strong> ${user.role === 'superuser' ? 'Administrator' : 'User'}</p>
+        <p class="mb-0 mt-2 small">Use your User ID when authorizing API calls in Swagger UI</p>
       `;
     }
   }

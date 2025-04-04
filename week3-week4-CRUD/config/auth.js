@@ -2,7 +2,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("../models/userModels");
 
-const callbackURL = "https://cse341-6wo0.onrender.com/auth/google/callback";
+const callbackURL = "https://cse341-6wo0.onrender.com/auth/google/hp/callback";
 
 passport.use(
   new GoogleStrategy(

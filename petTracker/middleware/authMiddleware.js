@@ -31,10 +31,12 @@ const isAuthenticated = (req, res, next) => {
       });
     }
     
-    if (req.user.role === 'superuser') {
+    if (req.user && req.user.role === 'superuser') {
+      console.log('Superuser access granted for:', req.user.email);
       return next();
     }
     
+    console.log('Superuser access denied for:', req.user ? req.user.email : 'unknown user');
     res.status(403).json({ 
       success: false, 
       message: 'You do not have permission to access this resource' 
@@ -54,7 +56,8 @@ const isAuthenticated = (req, res, next) => {
       }
       
       // Superusers can access any pet
-      if (req.user.role === 'superuser') {
+      if (req.user && req.user.role === 'superuser') {
+        console.log('Superuser bypass ownership check for:', req.user.email);
         return next();
       }
       
@@ -78,16 +81,17 @@ const isAuthenticated = (req, res, next) => {
       }
       
       // Check if the user owns this pet
-      if (pet.userId.toString() === req.user.id) {
+      if (pet.userId && pet.userId.toString() === req.user.id) {
         return next();
       }
       
+      console.log(`Ownership check failed: User ${req.user.id} tried to access pet ${petId} owned by ${pet.userId}`);
       res.status(403).json({ 
         success: false, 
         message: 'You can only manage your own pets' 
       });
     } catch (err) {
-      console.error('❌ Error in isPetOwner middleware:', err);
+      console.error('Error in isPetOwner middleware:', err);
       res.status(500).json({ 
         success: false, 
         message: 'Server error checking pet ownership' 
@@ -99,8 +103,9 @@ const isAuthenticated = (req, res, next) => {
    * Attach user ID to the request body
    */
   const attachUserId = (req, res, next) => {
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated() && req.user) {
       req.body.userId = req.user.id;
+      console.log(`Attached user ID ${req.user.id} to request body`);
     }
     next();
   };

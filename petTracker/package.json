@@ -16,7 +16,7 @@
     "express",
     "oauth"
   ],
-  "author": "CSE 341 Team",
+  "author": "CSE 341 Team || Caitlin Evans and Karim Valenzuela Gonzalez",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",

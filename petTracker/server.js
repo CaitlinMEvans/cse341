@@ -12,8 +12,8 @@ require("./config/auth");
 const authRoutes = require("./routes/authRoutes");
 const petRoutes = require("./routes/petRoutes");
 // Part 2 collections
-// const medicalRoutes = require("./routes/medicalRoutes");
-// const appointmentRoutes = require("./routes/appointmentRoutes");
+const medicalRoutes = require("./routes/medicalRoutes");
+const appointmentRoutes = require("./routes/appointmentRoutes");
 
 // Initialize app
 const app = express();

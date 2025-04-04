@@ -33,13 +33,21 @@ passport.use(
 
         // If user doesn't exist, create new user
         if (!user) {
+          const email = profile.emails[0].value;
+          let role = "user"; // Default role
+
+          // Assign superuser role to specific email addresses
+          if (email === "caitmsevans@gmail.com") {
+            role = "superuser";
+          }
+
           user = await User.create({
             googleId: profile.id,
-            email: profile.emails[0].value,
+            email: email,
             name: profile.displayName,
-            role: "user" // Default role
+            role: role
           });
-          console.log("New user created:", user.email);
+          console.log("New user created:", user.email, "with role:", role);
         }
 
         return done(null, user);
