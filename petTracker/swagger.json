@@ -283,7 +283,7 @@
         "type": "object",
         "required": ["date", "recordType", "description"],
         "properties": {
-          "date": { "type": "string", "format": "date", "example": "2023-01-15" },
+          "date": { "type": "string", "format": "date", "example": "2025-01-15" },
           "recordType": { 
             "type": "string", 
             "enum": ["Checkup", "Vaccination", "Illness", "Injury", "Surgery", "Medication", "Dental", "Other"],
