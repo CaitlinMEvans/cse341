@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <p class="card-text text-muted small">${pet.notes || ''}</p>
             </div>
             <div class="card-footer bg-transparent border-top-0">
-              <a href="/api-docs/#/Pets/get_api_pets__id_" class="btn btn-sm btn-outline-primary">View Details</a>
+              <a href="/api-docs/#/Pets/get_api_pets__id_" class="btn btn-sm btn-outline-primary" target="_blank">View Details</a>
             </div>
           </div>
         </div>
