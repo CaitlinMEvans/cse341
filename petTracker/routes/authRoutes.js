@@ -5,31 +5,24 @@ const { isAuthenticated } = require('../middleware/authMiddleware');
 
 // @route   GET /auth/google
 // @desc    Authenticate with Google
-// @access  Public
 router.get('/google', 
-  passport.authenticate('google', { scope: ['profile', 'email'] })
-);
-
-// @route   GET /auth/google/callback
-// @desc    Google auth callback
-// @access  Public
-router.get('/google/callback', 
-  passport.authenticate('google', { 
-    failureRedirect: '/login.html',
-    failureMessage: 'Failed to authenticate with Google' 
-  }),
-  (req, res) => {
-    // Update last login time
-    if (req.user && req.user.updateLastLogin) {
-      req.user.updateLastLogin();
+    passport.authenticate('google', { scope: ['profile', 'email'] })
+  );
+  
+  router.get('/google/pettracker/callback', 
+    passport.authenticate('google', { 
+      failureRedirect: '/login.html',
+      failureMessage: 'Failed to authenticate with Google' 
+    }),
+    (req, res) => {
+      // Successful authentication, redirect to dashboard
+      res.redirect('/dashboard');
     }
-    res.redirect('/dashboard');
-  }
-);
+  );
+  
 
 // @route   GET /auth/logout
 // @desc    Logout user
-// @access  Public
 router.get('/logout', (req, res, next) => {
   // Handle different versions of passport
   if (req.logout && typeof req.logout === 'function') {
@@ -58,7 +51,6 @@ router.get('/user', isAuthenticated, (req, res) => {
 
 // @route   GET /auth/status
 // @desc    Check authentication status
-// @access  Public
 router.get('/status', (req, res) => {
   if (req.isAuthenticated()) {
     const { _id, name, email, role } = req.user;
