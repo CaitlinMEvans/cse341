@@ -100,7 +100,7 @@ const doc = {
             lastUpdated: {
               type: 'string',
               format: 'date-time',
-              example: '2023-01-05T00:00:00.000Z'
+              example: '2025-01-05T00:00:00.000Z'
             }
           }
         },
@@ -123,12 +123,12 @@ const doc = {
         createdAt: {
           type: 'string',
           format: 'date-time',
-          example: '2023-01-01T00:00:00.000Z'
+          example: '2025-01-01T00:00:00.000Z'
         },
         updatedAt: {
           type: 'string',
           format: 'date-time',
-          example: '2023-01-05T00:00:00.000Z'
+          example: '2025-01-05T00:00:00.000Z'
         }
       }
     },
@@ -203,7 +203,7 @@ const doc = {
         date: {
           type: 'string',
           format: 'date-time',
-          example: '2023-01-15T00:00:00.000Z'
+          example: '2025-01-15T00:00:00.000Z'
         },
         recordType: {
           type: 'string',
@@ -255,12 +255,12 @@ const doc = {
               startDate: {
                 type: 'string',
                 format: 'date-time',
-                example: '2023-01-15T00:00:00.000Z'
+                example: '2025-01-15T00:00:00.000Z'
               },
               endDate: {
                 type: 'string',
                 format: 'date-time',
-                example: '2023-01-25T00:00:00.000Z'
+                example: '2025-01-25T00:00:00.000Z'
               },
               notes: {
                 type: 'string',
@@ -289,12 +289,12 @@ const doc = {
         createdAt: {
           type: 'string',
           format: 'date-time',
-          example: '2023-01-15T00:00:00.000Z'
+          example: '2025-01-15T00:00:00.000Z'
         },
         updatedAt: {
           type: 'string',
           format: 'date-time',
-          example: '2023-01-15T00:00:00.000Z'
+          example: '2025-01-15T00:00:00.000Z'
         }
       }
     },
@@ -305,7 +305,7 @@ const doc = {
         date: {
           type: 'string',
           format: 'date-time',
-          example: '2023-01-15T00:00:00.000Z'
+          example: '2025-01-15T00:00:00.000Z'
         },
         recordType: {
           type: 'string',
@@ -357,12 +357,12 @@ const doc = {
               startDate: {
                 type: 'string',
                 format: 'date-time',
-                example: '2023-01-15T00:00:00.000Z'
+                example: '2025-01-15T00:00:00.000Z'
               },
               endDate: {
                 type: 'string',
                 format: 'date-time',
-                example: '2023-01-25T00:00:00.000Z'
+                example: '2025-01-25T00:00:00.000Z'
               },
               notes: {
                 type: 'string',
@@ -408,7 +408,7 @@ const doc = {
         date: {
           type: 'string',
           format: 'date-time',
-          example: '2023-02-15T00:00:00.000Z'
+          example: '2025-02-15T00:00:00.000Z'
         },
         time: {
           type: 'string',
@@ -469,12 +469,12 @@ const doc = {
         createdAt: {
           type: 'string',
           format: 'date-time',
-          example: '2023-01-20T00:00:00.000Z'
+          example: '2025-01-20T00:00:00.000Z'
         },
         updatedAt: {
           type: 'string',
           format: 'date-time',
-          example: '2023-01-20T00:00:00.000Z'
+          example: '2025-01-20T00:00:00.000Z'
         }
       }
     },
@@ -485,7 +485,7 @@ const doc = {
         date: {
           type: 'string',
           format: 'date-time',
-          example: '2023-02-15T00:00:00.000Z'
+          example: '2025-02-15T00:00:00.000Z'
         },
         time: {
           type: 'string',
