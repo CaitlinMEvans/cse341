@@ -1,5 +1,3 @@
-// Authentication middleware
-
 /**
  * Check if user is authenticated
  */
