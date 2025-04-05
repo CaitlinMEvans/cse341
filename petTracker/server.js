@@ -9,7 +9,10 @@ const path = require("path");
 
 // Import routes
 require("./config/auth");
+// auth Routes for users not working as expected.. 
 const authRoutes = require("./routes/authRoutes");
+// created user Route 
+const userRoutes = require('./routes/userRoutes');
 const petRoutes = require("./routes/petRoutes");
 // Part 2 collections
 const medicalRoutes = require("./routes/medicalRoutes");
@@ -49,6 +52,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // API Routes
 app.use("/auth", authRoutes);
+app.use('/api/users', userRoutes);
 app.use("/api/pets", petRoutes);
 app.use("/api/medical", medicalRoutes);
 app.use("/api/appointments", appointmentRoutes);

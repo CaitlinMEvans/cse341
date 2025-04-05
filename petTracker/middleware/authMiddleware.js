@@ -109,10 +109,40 @@ const isAuthenticated = (req, res, next) => {
     }
     next();
   };
+
+  /**
+ * Check if user is accessing their own data or is a superuser
+ */
+const isOwnUserOrSuperUser = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Please log in to access this resource' 
+      });
+    }
+    
+    // Superusers can access any user data
+    if (req.user.role === 'superuser') {
+      return next();
+    }
+    
+    // Regular users can only access their own data
+    if (req.params.id === req.user.id) {
+      return next();
+    }
+    
+    // Access denied for other users' data
+    res.status(403).json({ 
+      success: false, 
+      message: 'Access denied. Only superusers can manage other users.' 
+    });
+  };
+  
   
   module.exports = {
     isAuthenticated,
     isSuperUser,
     isPetOwner,
-    attachUserId
+    attachUserId,
+    isOwnUserOrSuperUser
   };

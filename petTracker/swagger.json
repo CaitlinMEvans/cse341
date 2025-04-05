@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
       "title": "Pet Tracker API",
-      "description": "API for tracking pet information, medical records, and appointments",
+      "description": "API for tracking pet information, medical records, and appointments. <br> Users can create, read, update, and delete pet information for their acocunt only. <br> only the user user can add edit or delete other users, but super cannot see other users pet details. <br> only individual USERS can see their pet details. no User can see or edit another users pet data, including the super user.",
       "version": "1.0.0"
     },
     "host": "localhost:8080",
@@ -20,6 +20,116 @@
       }
     },
     "paths": {
+      "/api/users": {
+        "get": {
+          "tags": ["Users"],
+          "summary": "Get all users (superuser only)",
+          "security": [{ "OAuth2": [] }],
+          "responses": {
+            "200": { "description": "List of users" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized - Superuser access only" },
+            "500": { "description": "Server error" }
+          }
+        },
+        "post": {
+          "tags": ["Users"],
+          "summary": "Create a new user (superuser only)",
+          "security": [{ "OAuth2": [] }],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "user",
+              "description": "User to create",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/UserInput"
+              }
+            }
+          ],
+          "responses": {
+            "201": { "description": "User created" },
+            "400": { "description": "Validation error" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized - Superuser access only" },
+            "500": { "description": "Server error" }
+          }
+        }
+      },
+      "/api/users/{id}": {
+        "get": {
+          "tags": ["Users"],
+          "summary": "Get user by ID (superuser or own user)",
+          "security": [{ "OAuth2": [] }],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "User ID"
+            }
+          ],
+          "responses": {
+            "200": { "description": "User details" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized - Only superusers can access other users' data" },
+            "404": { "description": "User not found" },
+            "500": { "description": "Server error" }
+          }
+        },
+        "put": {
+          "tags": ["Users"],
+          "summary": "Update user (superuser or own user)",
+          "security": [{ "OAuth2": [] }],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "User ID"
+            },
+            {
+              "in": "body",
+              "name": "user",
+              "description": "User data to update",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/UserInput"
+              }
+            }
+          ],
+          "responses": {
+            "200": { "description": "User updated" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized - Only superusers can modify other users' data" },
+            "404": { "description": "User not found" },
+            "500": { "description": "Server error" }
+          }
+        },
+        "delete": {
+          "tags": ["Users"],
+          "summary": "Delete user (superuser or own user)",
+          "security": [{ "OAuth2": [] }],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "User ID"
+            }
+          ],
+          "responses": {
+            "200": { "description": "User deleted" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized - Only superusers can delete other users" },
+            "404": { "description": "User not found" },
+            "500": { "description": "Server error" }
+          }
+        }
+      },
       "/api/pets": {
         "get": {
           "tags": ["Pets"],
@@ -228,36 +338,27 @@
             "500": { "description": "Server error" }
           }
         }
-      },
-      "/auth/google": {
-        "get": {
-          "tags": ["Authentication"],
-          "summary": "Google OAuth login",
-          "responses": {
-            "302": { "description": "Redirect to Google authentication" }
-          }
-        }
-      },
-      "/auth/google/callback": {
-        "get": {
-          "tags": ["Authentication"],
-          "summary": "Google OAuth callback",
-          "responses": {
-            "302": { "description": "Redirect to dashboard" }
-          }
-        }
-      },
-      "/auth/logout": {
-        "get": {
-          "tags": ["Authentication"],
-          "summary": "Logout",
-          "responses": {
-            "302": { "description": "Redirect to home page" }
-          }
-        }
       }
     },
     "definitions": {
+      "UserInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@example.com"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["user", "superuser"],
+            "example": "user"
+          }
+        }
+      },
       "PetInput": {
         "type": "object",
         "required": ["name", "species"],
