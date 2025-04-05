@@ -287,6 +287,58 @@
           }
         }
       },
+      "/api/medical/record/{medicalRecordId}": {
+        "put": {
+          "tags": ["Medical Records"],
+          "summary": "Update a medical record",
+          "security": [{ "OAuth2": ["write:pets"] }],
+          "parameters": [
+            {
+              "name": "medicalRecordId",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "Medical record ID"
+            },
+            {
+              "in": "body",
+              "name": "record",
+              "description": "Medical record to be updated",
+              "required": true,
+              "schema": { "$ref": "#/definitions/MedicalRecordInput" }
+            }
+          ],
+          "responses": {
+            "201": { "description": "Medical record updated successfully" },
+            "400": { "description": "Invalid request" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized to add records for this pet" },
+            "404": { "description": "Pet not found" },
+            "500": { "description": "Server error" }
+          }
+        },
+        "delete": {
+          "tags": ["Medical Records"],
+          "summary": "Delete a Medical record",
+          "security": [{ "OAuth2": ["write:pets"] }],
+          "parameters": [
+            {
+              "name": "medicalRecordId",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "Medical record ID"
+            }
+          ],
+          "responses": {
+            "200": { "description": "Medical record deleted successfully" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized to delete this medical record." },
+            "404": { "description": "Medical record not found" },
+            "500": { "description": "Server error" }
+          }
+        }
+      },
       "/api/appointments/{petId}": {
         "get": {
           "tags": ["Appointments"],
@@ -335,6 +387,58 @@
             "401": { "description": "Not authenticated" },
             "403": { "description": "Not authorized to add appointments for this pet" },
             "404": { "description": "Pet not found" },
+            "500": { "description": "Server error" }
+          }
+        }
+      },
+      "/api/appointments/appointment/{appointmentId}": {
+        "put": {
+          "tags": ["Appointments"],
+          "summary": "Update an appointment",
+          "security": [{ "OAuth2": ["write:pets"] }],
+          "parameters": [
+            {
+              "name": "appointmentId",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "Appointment ID"
+            },
+            {
+              "in": "body",
+              "name": "appointment",
+              "description": "Appointment to be updated",
+              "required": true,
+              "schema": { "$ref": "#/definitions/AppointmentInput" }
+            }
+          ],
+          "responses": {
+            "201": { "description": "Appointment updated successfully" },
+            "400": { "description": "Invalid request" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized to update appointments for this pet" },
+            "404": { "description": "Pet not found" },
+            "500": { "description": "Server error" }
+          }
+        },
+        "delete": {
+          "tags": ["Appointments"],
+          "summary": "Delete an Appointment",
+          "security": [{ "OAuth2": ["write:pets"] }],
+          "parameters": [
+            {
+              "name": "appointmentId",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "Appointment ID"
+            }
+          ],
+          "responses": {
+            "200": { "description": "Appointment deleted successfully" },
+            "401": { "description": "Not authenticated" },
+            "403": { "description": "Not authorized to delete this appointment" },
+            "404": { "description": "Appointment not found" },
             "500": { "description": "Server error" }
           }
         }
