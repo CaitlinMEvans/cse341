@@ -119,4 +119,11 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
+app.use(cors({
+  origin: true, // Allows all origins
+  credentials: true, // Allows credentials (cookies, etc.)
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 module.exports = app;
