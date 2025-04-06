@@ -5,7 +5,7 @@
       "description": "API for tracking pet information, medical records, and appointments. <br> Users can create, read, update, and delete pet information for their accocunt only. <br> Only the SUPER USER can add edit or delete other USERS, but SUPER USER cannot see other users pet details from another USERS account. <br> only individual USERS can see their pet details. <br> NO USER can see or edit ANOTHER USERS pet data, including the SUPER USER.",
       "version": "1.0.0"
     },
-    "host": "localhost:8080",
+    "host": "https://cse341-6wo0.onrender.com/",
     "basePath": "/",
     "schemes": ["http", "https"],
     "securityDefinitions": {

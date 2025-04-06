@@ -21,10 +21,10 @@ const doc = {
     }
   },
   servers: [
-    {
-      url: 'http://localhost:8080',
-      description: 'Local Development Server'
-    },
+    // {
+    //   url: 'http://localhost:8080',
+    //   description: 'Local Development Server'
+    // },
     {
       url: 'https://cse341-6wo0.onrender.com',
       description: 'Production Server'
