@@ -16,7 +16,7 @@ router.get('/google',
     }),
     (req, res) => {
       // Successful authentication, redirect to dashboard
-      res.redirect('/petTracker/public/dashboard.html');
+      res.redirect('/dashboard');
     }
   );
   
@@ -39,7 +39,6 @@ router.get('/logout', (req, res, next) => {
 
 // @route   GET /auth/user
 // @desc    Get current user info
-// @access  Private
 router.get('/user', isAuthenticated, (req, res) => {
   // Return user data without sensitive info
   const { _id, name, email, role } = req.user;
