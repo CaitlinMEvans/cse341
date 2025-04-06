@@ -28,15 +28,26 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Session setup
+// app.use(session({
+//   secret: process.env.SESSION_SECRET || 'keyboard cat',
+//   resave: false,
+//   saveUninitialized: false,
+//   cookie: { 
+//     secure: process.env.NODE_ENV === 'production',
+//     maxAge: 24 * 60 * 60 * 1000 // 24 hours
+//   }
+// }));
+
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'keyboard cat',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { 
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-  }
-}));
+    secret: process.env.SESSION_SECRET || 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { 
+      secure: false, // Temporarily set to false even in production for testing
+      sameSite: 'lax', // Add this
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
+  }));
 
 // Passport initialization
 app.use(passport.initialize());
@@ -66,13 +77,24 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// app.get('/dashboard', (req, res) => {
+//   if (req.isAuthenticated()) {
+//     res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+//   } else {
+//     res.redirect('/login.html');
+//   }
+// });
+
 app.get('/dashboard', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
-  } else {
-    res.redirect('/login.html');
-  }
-});
+    console.log('Dashboard route - isAuthenticated:', req.isAuthenticated());
+    console.log('User:', req.user);
+    
+    if (req.isAuthenticated()) {
+      res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+    } else {
+      res.redirect('/login.html');
+    }
+  });
 
 // Error handler
 app.use((err, req, res, next) => {
