@@ -16,7 +16,7 @@ router.get('/google',
     }),
     (req, res) => {
       // Successful authentication, redirect to dashboard
-      res.redirect('/dashboard');
+      res.redirect('../public/dashboard.html');
     }
   );
   
