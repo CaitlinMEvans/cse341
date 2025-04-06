@@ -1,38 +1,3 @@
-// const express = require('express');
-// const passport = require('passport');
-// const router = express.Router();
-// const { isAuthenticated } = require('../middleware/authMiddleware');
-
-// // @route   GET /auth/google
-// // @desc    Authenticate with Google
-// // router.get('/google', 
-// //     passport.authenticate('google', { scope: ['profile', 'email'] })
-// //   );
-  
-// //   router.get('/google/pettracker/callback', 
-// //     passport.authenticate('google', { 
-// //       failureRedirect: '/login.html',
-// //       failureMessage: 'Failed to authenticate with Google' 
-// //     }),
-// //     (req, res) => {
-// //       // Successful authentication, redirect to dashboard
-// //       res.redirect('/dashboard');
-// //     }
-// //   );
-
-// router.get('/google/pettracker/callback', 
-//     passport.authenticate('google', { 
-//       failureRedirect: '/login.html',
-//       failureMessage: 'Failed to authenticate with Google' 
-//     }),
-//     (req, res) => {
-//       // Add some debug logging
-//       console.log('Auth successful, user:', req.user);
-//       // Redirect to dashboard with a simpler path
-//       res.redirect('/dashboard');
-//     }
-//   );
-  
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
