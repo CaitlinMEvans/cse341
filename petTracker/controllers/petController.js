@@ -6,12 +6,12 @@ const { validationResult } = require('express-validator');
 // @access  Private
 exports.getPets = async (req, res) => {
  try {
-   let query = {};
+   let query = { userId: req.user.id };
    
-   // Regular users can only see their own pets
-   // Superusers can see all pets
-   if (req.user.role !== 'superuser') {
-     query = { userId: req.user.id };
+   // Superusers can see all pets ONLY if explicitly requested with a query parameter
+   // This allows the API docs to work properly while keeping the dashboard secure
+   if (req.user.role === 'superuser' && req.query.all === 'true') {
+     query = {};
    }
    
    // Find pets based on the query
@@ -31,9 +31,7 @@ exports.getPets = async (req, res) => {
  }
 };
 
-// @desc    Get single pet
-// @route   GET /api/pets/:id
-// @access  Private
+// Rest of the controller functions remain the same
 exports.getPet = async (req, res) => {
  try {
    const pet = await Pet.findById(req.params.id);
@@ -46,7 +44,6 @@ exports.getPet = async (req, res) => {
    }
    
    // Check if user owns this pet or is superuser
-   // This check might be redundant if using middleware, but adds an extra layer of security
    if (pet.userId.toString() !== req.user.id && req.user.role !== 'superuser') {
      return res.status(403).json({
        success: false,
@@ -67,9 +64,6 @@ exports.getPet = async (req, res) => {
  }
 };
 
-// @desc    Create new pet
-// @route   POST /api/pets
-// @access  Private
 exports.createPet = async (req, res) => {
  try {
    // Input validation - check for errors
@@ -110,9 +104,6 @@ exports.createPet = async (req, res) => {
  }
 };
 
-// @desc    Update pet
-// @route   PUT /api/pets/:id
-// @access  Private
 exports.updatePet = async (req, res) => {
  try {
    // Input validation
@@ -177,9 +168,6 @@ exports.updatePet = async (req, res) => {
  }
 };
 
-// @desc    Delete pet
-// @route   DELETE /api/pets/:id
-// @access  Private
 exports.deletePet = async (req, res) => {
  try {
    const pet = await Pet.findById(req.params.id);

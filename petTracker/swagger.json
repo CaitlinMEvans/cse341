@@ -131,17 +131,27 @@
         }
       },
       "/api/pets": {
-        "get": {
-          "tags": ["Pets"],
-          "summary": "Get all pets for the logged in user",
-          "security": [{ "OAuth2": ["read:pets"] }],
-          "responses": {
-            "200": { "description": "List of pets" },
-            "401": { "description": "Not authenticated" },
-            "500": { "description": "Server error" }
+      "get": {
+        "tags": ["Pets"],
+        "summary": "Get all pets for the logged in user",
+        "security": [{ "OAuth2": ["read:pets"] }],
+        "parameters": [
+          {
+            "name": "all",
+            "in": "query",
+            "description": "Set to 'true' to get all pets (superuser only)",
+            "required": false,
+            "type": "string",
+            "enum": ["true", "false"]
           }
-        },
-        "post": {
+        ],
+        "responses": {
+          "200": { "description": "List of pets" },
+          "401": { "description": "Not authenticated" },
+          "500": { "description": "Server error" }
+        }
+      },
+      "post": {
           "tags": ["Pets"],
           "summary": "Create a new pet",
           "security": [{ "OAuth2": ["write:pets"] }],
