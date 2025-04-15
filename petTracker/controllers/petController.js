@@ -202,3 +202,37 @@ exports.deletePet = async (req, res) => {
    });
  }
 };
+// Added super user get all pets but wanted a check on role not just blind True / Get All
+// @desc    Get all pets for logged in user
+// @route   GET /api/pets
+// @access  Private
+exports.getPets = async (req, res) => {
+  try {
+    // Default query: user can only see their own pets
+    let query = { userId: req.user.id };
+    
+    // Only allow the 'all' parameter to work if the user is actually a superuser
+    if (req.query.all === 'true' && req.user.role === 'superuser') {
+      console.log('Superuser viewing all pets:', req.user.email);
+      query = {}; // No filter means all pets
+    } else if (req.query.all === 'true' && req.user.role !== 'superuser') {
+      // If a non-superuser tries to use the 'all' parameter, log it as a potential security issue
+      console.warn('Security alert: Non-superuser attempted to view all pets:', req.user.email);
+    }
+    
+    // Find pets based on the query
+    const pets = await Pet.find(query).sort({ name: 1 });
+    
+    res.json({
+      success: true,
+      count: pets.length,
+      data: pets
+    });
+  } catch (err) {
+    console.error('❌ Error retrieving pets:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Error retrieving pets'
+    });
+  }
+ };
