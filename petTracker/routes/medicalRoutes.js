@@ -1,3 +1,4 @@
+// routes/medicalRoutes.js
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
@@ -15,14 +16,17 @@ router.use(isAuthenticated);
 
 // @route   GET /api/medical/:petId
 // @desc    Get all medical records for a pet
+// @access  Private
 router.get('/:petId', isPetOwner, getMedicalRecords);
 
 // @route   GET /api/medical/record/:id
 // @desc    Get single medical record
+// @access  Private
 router.get('/record/:id', getMedicalRecord);
 
 // @route   POST /api/medical/:petId
 // @desc    Create new medical record
+// @access  Private
 router.post('/:petId', [
   // Validation
   check('date', 'Date is required').not().isEmpty(),
@@ -32,6 +36,7 @@ router.post('/:petId', [
 
 // @route   PUT /api/medical/record/:id
 // @desc    Update medical record
+// @access  Private
 router.put('/record/:id', [
   // Validation for updates
   check('date').optional().isISO8601().withMessage('Date must be a valid date'),
@@ -44,6 +49,7 @@ router.put('/record/:id', [
 
 // @route   DELETE /api/medical/record/:id
 // @desc    Delete medical record
+// @access  Private
 router.delete('/record/:id', deleteMedicalRecord);
 
 module.exports = router;

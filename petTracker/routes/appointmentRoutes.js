@@ -1,3 +1,4 @@
+// routes/appointmentRoutes.js
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
@@ -15,14 +16,17 @@ router.use(isAuthenticated);
 
 // @route   GET /api/appointments/:petId
 // @desc    Get all appointments for a pet
+// @access  Private
 router.get('/:petId', isPetOwner, getAppointments);
 
 // @route   GET /api/appointments/appointment/:id
 // @desc    Get single appointment
+// @access  Private
 router.get('/appointment/:id', getAppointment);
 
 // @route   POST /api/appointments/:petId
 // @desc    Create new appointment
+// @access  Private
 router.post('/:petId', [
   // Validation
   check('date', 'Date is required').not().isEmpty().isISO8601().withMessage('Date must be valid'),
@@ -31,6 +35,7 @@ router.post('/:petId', [
 
 // @route   PUT /api/appointments/appointment/:id
 // @desc    Update appointment
+// @access  Private
 router.put('/appointment/:id', [
   // Validation for updates
   check('date').optional().isISO8601().withMessage('Date must be a valid date'),
@@ -45,6 +50,7 @@ router.put('/appointment/:id', [
 
 // @route   DELETE /api/appointments/appointment/:id
 // @desc    Delete appointment
+// @access  Private
 router.delete('/appointment/:id', deleteAppointment);
 
 module.exports = router;
