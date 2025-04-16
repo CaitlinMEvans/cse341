@@ -4,6 +4,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { 
   getAppointments,
+  getAllAppointments,
   getAppointment,
   createAppointment,
   updateAppointment,
@@ -14,8 +15,13 @@ const { isAuthenticated, isPetOwner } = require('../middleware/authMiddleware');
 // Apply authentication middleware to all routes
 router.use(isAuthenticated);
 
+// @route   GET /api/appointments
+// @desc    Get all appointments for all of the logged-in user's pets
+// @access  Private
+router.get('/', getAllAppointments);
+
 // @route   GET /api/appointments/:petId
-// @desc    Get all appointments for a pet
+// @desc    Get all appointments for a specific pet
 // @access  Private
 router.get('/:petId', isPetOwner, getAppointments);
 

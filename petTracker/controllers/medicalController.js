@@ -8,6 +8,24 @@ exports.getMedicalRecords = async (req, res) => {
     // Get pet ID from URL
     const petId = req.params.petId;
     
+    // First check if user owns this pet
+    const pet = await Pet.findById(petId);
+    
+    if (!pet) {
+      return res.status(404).json({
+        success: false,
+        message: 'Pet not found'
+      });
+    }
+    
+    // Verify ownership - user can only access their own pets' medical records
+    if (pet.userId.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: 'Not authorized to access this pet\'s medical records'
+      });
+    }
+    
     // Get all medical records for this pet
     const records = await MedicalRecord.find({ petId })
       .sort({ date: -1 });
@@ -19,6 +37,46 @@ exports.getMedicalRecords = async (req, res) => {
     });
   } catch (err) {
     console.error('Error retrieving medical records:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Error retrieving medical records'
+    });
+  }
+};
+
+// @desc    Get all medical records for all of the logged-in user's pets
+// @route   GET /api/medical
+exports.getAllMedicalRecords = async (req, res) => {
+  try {
+    // Default query: Get all pets owned by this user
+    const userPets = await Pet.find({ userId: req.user.id }).select('_id');
+    
+    // Extract pet IDs
+    const petIds = userPets.map(pet => pet._id);
+    
+    // Default query for medical records
+    let query = { petId: { $in: petIds } };
+    
+    // Only allow the 'all' parameter to work if the user is actually a superuser
+    if (req.query.all === 'true' && req.user.role === 'superuser') {
+      console.log('Superuser viewing all medical records:', req.user.email);
+      // Remove the petId filter to get all records in the system
+      query = {};
+    } else if (req.query.all === 'true' && req.user.role !== 'superuser') {
+      // If a non-superuser tries to use the 'all' parameter, log it as a potential security issue
+      console.warn('Security alert: Non-superuser attempted to view all medical records:', req.user.email);
+    }
+    
+    // Find medical records based on the query
+    const records = await MedicalRecord.find(query).sort({ date: -1 });
+    
+    res.json({
+      success: true,
+      count: records.length,
+      data: records
+    });
+  } catch (err) {
+    console.error('Error retrieving all medical records:', err);
     res.status(500).json({
       success: false,
       message: 'Error retrieving medical records'

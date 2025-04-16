@@ -8,6 +8,24 @@ exports.getAppointments = async (req, res) => {
     // Get pet ID from URL
     const petId = req.params.petId;
     
+    // First check if user owns this pet
+    const pet = await Pet.findById(petId);
+    
+    if (!pet) {
+      return res.status(404).json({
+        success: false,
+        message: 'Pet not found'
+      });
+    }
+    
+    // Verify ownership - user can only access their own pets' appointments
+    if (pet.userId.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: 'Not authorized to access this pet\'s appointments'
+      });
+    }
+    
     // Optional query param to filter by status
     const filterStatus = req.query.status;
     
@@ -28,6 +46,51 @@ exports.getAppointments = async (req, res) => {
     });
   } catch (err) {
     console.error('Error retrieving appointments:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Error retrieving appointments'
+    });
+  }
+};
+
+// @desc    Get all appointments for all of the logged-in user's pets
+// @route   GET /api/appointments
+exports.getAllAppointments = async (req, res) => {
+  try {
+    // Default query: Get all pets owned by this user
+    const userPets = await Pet.find({ userId: req.user.id }).select('_id');
+    
+    // Extract pet IDs
+    const petIds = userPets.map(pet => pet._id);
+    
+    // Default query for appointments
+    let query = { petId: { $in: petIds } };
+    
+    // Add status filter if provided
+    if (req.query.status) {
+      query.status = req.query.status;
+    }
+    
+    // Only allow the 'all' parameter to work if the user is actually a superuser
+    if (req.query.all === 'true' && req.user.role === 'superuser') {
+      console.log('Superuser viewing all appointments:', req.user.email);
+      // Remove the petId filter to get all appointments in the system
+      delete query.petId;
+    } else if (req.query.all === 'true' && req.user.role !== 'superuser') {
+      // If a non-superuser tries to use the 'all' parameter, log it as a potential security issue
+      console.warn('Security alert: Non-superuser attempted to view all appointments:', req.user.email);
+    }
+    
+    // Find appointments based on the query
+    const appointments = await Appointment.find(query).sort({ date: 1 });
+    
+    res.json({
+      success: true,
+      count: appointments.length,
+      data: appointments
+    });
+  } catch (err) {
+    console.error('Error retrieving all appointments:', err);
     res.status(500).json({
       success: false,
       message: 'Error retrieving appointments'

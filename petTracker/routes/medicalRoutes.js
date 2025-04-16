@@ -4,6 +4,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { 
   getMedicalRecords,
+  getAllMedicalRecords,
   getMedicalRecord,
   createMedicalRecord,
   updateMedicalRecord,
@@ -14,8 +15,13 @@ const { isAuthenticated, isPetOwner } = require('../middleware/authMiddleware');
 // Apply authentication middleware to all routes
 router.use(isAuthenticated);
 
+// @route   GET /api/medical
+// @desc    Get all medical records for all of the logged-in user's pets
+// @access  Private
+router.get('/', getAllMedicalRecords);
+
 // @route   GET /api/medical/:petId
-// @desc    Get all medical records for a pet
+// @desc    Get all medical records for a specific pet
 // @access  Private
 router.get('/:petId', isPetOwner, getMedicalRecords);
 

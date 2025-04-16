@@ -245,6 +245,28 @@
           }
         }
       },
+      "/api/medical": {
+        "get": {
+          "tags": ["Medical Records"],
+          "summary": "Get all medical records for the logged in user's pets",
+          "security": [{ "OAuth2": ["read:pets"] }],
+          "parameters": [
+            {
+              "name": "all",
+              "in": "query",
+              "description": "Set to 'true' to get all medical records (superuser only)",
+              "required": false,
+              "type": "string",
+              "enum": ["true", "false"]
+            }
+          ],
+          "responses": {
+            "200": { "description": "List of medical records" },
+            "401": { "description": "Not authenticated" },
+            "500": { "description": "Server error" }
+          }
+        }
+      },
       "/api/medical/{petId}": {
         "get": {
           "tags": ["Medical Records"],
@@ -349,6 +371,36 @@
     }
   }
 },
+    "/api/appointments": {
+      "get": {
+        "tags": ["Appointments"],
+        "summary": "Get all appointments for the logged in user's pets",
+        "security": [{ "OAuth2": ["read:pets"] }],
+        "parameters": [
+          {
+            "name": "all",
+            "in": "query",
+            "description": "Set to 'true' to get all appointments (superuser only)",
+            "required": false,
+            "type": "string",
+            "enum": ["true", "false"]
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter appointments by status",
+            "required": false,
+            "type": "string",
+            "enum": ["Scheduled", "Confirmed", "Completed", "Cancelled", "Missed"]
+          }
+        ],
+        "responses": {
+          "200": { "description": "List of appointments" },
+          "401": { "description": "Not authenticated" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
       "/api/appointments/{petId}": {
         "get": {
           "tags": ["Appointments"],
