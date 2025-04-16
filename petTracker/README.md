@@ -98,14 +98,12 @@ pet-tracker-api/
 ```
 
 ## 🔒 API Routes
+- `GET /api/users` - Get all users for SUPER USER ONLY
+- `GET /api/users/:id` - Get specific user details SUPER USER ONLY (or if your own account user id)
+- `POST /api/users` - Create a new user  SUPER USER ONLY
+- `PUT /api/users/:id` - Update a user SUPER USER ONLY (or if your own account user id)
+- `DELETE /api/users/:id` - Delete a pet SUPER USER ONLY
 
-### Authentication
-
-- `GET /auth/google` - Initiate Google OAuth login
-- `GET /auth/google/callback` - OAuth callback URL
-- `GET /auth/logout` - Logout current user
-- `GET /auth/user` - Get current user info
-- `GET /auth/status` - Check authentication status
 
 ### Pets
 
@@ -145,6 +143,6 @@ Interactive API documentation is available at `/api-docs` when the server is run
 ## Contributors
 
 - Caitlin Evans
-- Karim Valenzuela Gonzalez
+~~- Karim Valenzuela Gonzalez~~
 
 This project is created for CSE 341 Final Project.
