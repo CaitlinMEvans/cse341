@@ -7,12 +7,12 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "swagger": "node swagger.js",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:users": "jest tests/users.test.js",
-    "test:pets": "jest tests/pets.test.js",
-    "test:medical": "jest tests/medical.test.js",
-    "test:appointments": "jest tests/appointments.test.js"
+    "test": "cross-env NODE_ENV=test jest",
+    "test:watch": "cross-env NODE_ENV=test jest --watch",
+    "test:users": "cross-env NODE_ENV=test jest tests/users.test.js",
+    "test:pets": "cross-env NODE_ENV=test jest tests/pets.test.js",
+    "test:medical": "cross-env NODE_ENV=test jest tests/medical.test.js",
+    "test:appointments": "cross-env NODE_ENV=test jest tests/appointments.test.js"
   },
   "keywords": [
     "pets",
