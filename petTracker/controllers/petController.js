@@ -5,7 +5,7 @@ const Pet = require('../models/petModel');
 exports.getPets = async (req, res) => {
   try {
     // Find pets that belong to this user
-    const pets = await Pet.find({ userId: req.user.id }).sort({ name: 1 });
+    const pets = await Pet.find({ userId: req.user._id.toString() }).sort({ name: 1 });
     
     res.json({
       success: true,
